@@ -14,8 +14,10 @@ import {
  * @param  {Context}  context  Nuxt context
  * @param  {String}   locale  Language code to load
  */
-export async function loadLanguageAsync (context, locale) {
-  const { app } = context
+export async function loadLanguageAsync(context, locale) {
+  const {
+    app
+  } = context
 
   if (!app.i18n.loadedLanguages) {
     app.i18n.loadedLanguages = []
@@ -29,7 +31,7 @@ export async function loadLanguageAsync (context, locale) {
         // Hiding template directives from eslint so that parsing doesn't break.
         /* <% if (options.langDir) { %> */
         try {
-          const module = await import(/* webpackChunkName: "lang-[request]" */ '~/<%= options.langDir %>' + file)
+          const module = await import( /* webpackChunkName: "lang-[request]" */ '<%= options.langDir %>' + file)
           const messages = module.default ? module.default : module
           const result = typeof messages === 'function' ? await Promise.resolve(messages(context)) : messages
           app.i18n.setLocaleMessage(locale, result)
@@ -61,10 +63,10 @@ export const validateRouteParams = routeParams => {
   }
   Object.entries(routeParams).forEach(([key, value]) => {
     if (!localeCodes.includes(key)) {
-    // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
       console.warn(`[${MODULE_NAME}] Trying to set route params for key ${key} which is not a valid locale`)
     } else if (!isObject(value)) {
-    // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
       console.warn(`[${MODULE_NAME}] Trying to set route params for locale ${key} with a non-object value`)
     }
   })
