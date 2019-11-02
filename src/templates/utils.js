@@ -31,7 +31,7 @@ export async function loadLanguageAsync(context, locale) {
         // Hiding template directives from eslint so that parsing doesn't break.
         /* <% if (options.langDir) { %> */
         try {
-          const module = await import( /* webpackChunkName: "lang-[request]" */ '<%= options.langDir %>' + file)
+          const module = await import( /* webpackChunkName: "lang-[request]" */ file)
           const messages = module.default ? module.default : module
           const result = typeof messages === 'function' ? await Promise.resolve(messages(context)) : messages
           app.i18n.setLocaleMessage(locale, result)
